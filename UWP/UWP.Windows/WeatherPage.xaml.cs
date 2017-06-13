@@ -80,6 +80,7 @@ namespace UWP
             tbWeatherValue.Text = weatherInfo.getWeatherDescription();
             tbTemperatureValue.Text = weatherInfo.getTemperatureAsString();
             tbHumidityValue.Text = weatherInfo.getHumidityAsString();
+            tbWindValue.Text = weatherInfo.getWindAsString();
 
             LastCitiesManager.getInst().AddCity(new LastCity(city, DateTime.Now));
         }

@@ -18,7 +18,10 @@ namespace UWP
         [JsonProperty("weather")]
         List<Weather> weather { get; set; }
 
-        public WeatherInfo() { }
+        [JsonProperty("wind")]
+        Wind wind { get; set; }
+
+        public WeatherInfo() { } //for serialize
 
         public string getHumidityAsString()
         {
@@ -33,6 +36,11 @@ namespace UWP
         public string getWeatherDescription()
         {
             return weather[0].description;
+        }
+
+        public string getWindAsString()
+        {
+            return String.Format("{0} m/s", wind.speed);
         }
     }
 
@@ -49,9 +57,13 @@ namespace UWP
     {
         [JsonProperty("description")]
         public string description { get; set; }
-        Weather()
-        {
+        Weather() { } //for serialize
+    }
 
-        }
+    class Wind
+    {
+        [JsonProperty]
+        public float speed { get; set; }
+        public Wind() { } //for serialize
     }
 }
