@@ -59,7 +59,7 @@ namespace UWP
         public void setTextOnTextBock(string city)
         {
             RESTClient rest = new RESTClient();
-            string response = rest.getWeatherForLocation("Tokyo");
+            string response = rest.getWeatherForLocation(city);
             WeatherInfo weatherInfo = JsonConvert.DeserializeObject<WeatherInfo>(response);
 
             //tbCityValue.Text = data.name;
@@ -125,8 +125,8 @@ namespace UWP
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-
-            setTextOnTextBock("Tokyo");
+            if (tbCityName.Text != null)
+                setTextOnTextBock(tbCityName.Text);
         }
     }
 }
