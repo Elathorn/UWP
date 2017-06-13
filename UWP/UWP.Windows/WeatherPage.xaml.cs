@@ -54,6 +54,7 @@ namespace UWP
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
+            lvLastUsedCities.ItemsSource = LastCitiesManager.getInst().cities;
         }
 
         public void setTextOnTextBock(string city)
@@ -62,15 +63,12 @@ namespace UWP
             string response = rest.getWeatherForLocation(city);
             WeatherInfo weatherInfo = JsonConvert.DeserializeObject<WeatherInfo>(response);
 
-            //tbCityValue.Text = data.name;
-            //tbWeatherValue.Text = data.weather.description;
-            //tbTemperatureValue.Text = weatherInfo.getTemperatureAsString();
-            //tbHumidityValue.Text = weatherInfo.getHumidityAsString();
-
             tbCityValue.Text = weatherInfo.city;
             tbWeatherValue.Text = weatherInfo.getWeatherDescription();
             tbTemperatureValue.Text = weatherInfo.getTemperatureAsString();
             tbHumidityValue.Text = weatherInfo.getHumidityAsString();
+
+            LastCitiesManager.getInst().AddCity(new LastCity(city, DateTime.Now));
         }
 
         /// <summary>
@@ -127,6 +125,12 @@ namespace UWP
         {
             if (tbCityName.Text != null)
                 setTextOnTextBock(tbCityName.Text);
+        }
+
+        private void lvLastUsedCities_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            LastCity clickedCity = e.ClickedItem as LastCity;
+            setTextOnTextBock(clickedCity.name);
         }
     }
 }

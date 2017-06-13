@@ -46,13 +46,13 @@
             <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
         </Grid>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="628" Margin="890,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="156" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False">
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="628" Margin="890,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="156" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" SelectionMode="None">
             <TextBlock x:Name="tbCityInfo" TextWrapping="Wrap" Text="City:" FontSize="20"/>
             <TextBlock x:Name="tbWeatherInfo" TextWrapping="Wrap" Text="Weather:" FontSize="20"/>
             <TextBlock x:Name="tbTempratureInfo" TextWrapping="Wrap" Text="Temperature:" FontSize="20"/>
             <TextBlock x:Name="tbHumidityInfo" TextWrapping="Wrap" Text="Humidity:" FontSize="20"/>
         </ListView>
-        <ListView x:Name="listView1" HorizontalAlignment="Left" Height="628" Margin="1020,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="346" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False">
+        <ListView x:Name="listView1" HorizontalAlignment="Left" Height="628" Margin="1020,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="346" IsTapEnabled="False" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" SelectionMode="None">
             <TextBlock x:Name="tbCityValue" TextWrapping="Wrap" Text="" FontSize="20"/>
             <TextBlock x:Name="tbWeatherValue" TextWrapping="Wrap" Text="" FontSize="20"/>
             <TextBlock x:Name="tbTemperatureValue" TextWrapping="Wrap" Text="" FontSize="20"/>
@@ -60,8 +60,20 @@
         </ListView>
         <Button x:Name="btnSearch" Content="Search" HorizontalAlignment="Left" Margin="330,22,0,0" Grid.Row="1" VerticalAlignment="Top" Click="btnSearch_Click"/>
         <TextBox x:Name="tbCityName" HorizontalAlignment="Left" Margin="31,25,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" PlaceholderText="City"/>
-        <ListView x:Name="lvLastUsedCities" HorizontalAlignment="Left" Height="499" Margin="31,119,0,0" Grid.Row="1" VerticalAlignment="Top" Width="272"/>
-        <TextBlock x:Name="tbLastUsedCitiesInfo" HorizontalAlignment="Left" Margin="31,84,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="16"/>
+        <ListView x:Name="lvLastUsedCities" HorizontalAlignment="Left" Height="499" Margin="31,119,0,0" Grid.Row="1" VerticalAlignment="Top" Width="375" FontSize="14" SelectionMode="None" IsItemClickEnabled="True" ItemClick="lvLastUsedCities_ItemClick">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding name}"
+                                   FontSize="18"/>
+                        <TextBlock Text="{Binding date}"
+                                   FontSize="18"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBlock x:Name="tbLastUsedCitiesInfo" HorizontalAlignment="Left" Margin="31,84,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Last used cities:" VerticalAlignment="Top" FontSize="16"/>
 
     </Grid>
 </Page>
