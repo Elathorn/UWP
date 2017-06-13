@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using Windows.Data.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using Windows.UI.Popups;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234237
 
@@ -57,10 +59,21 @@ namespace UWP
             lvLastUsedCities.ItemsSource = LastCitiesManager.getInst().cities;
         }
 
-        public void setTextOnTextBock(string city)
+        public async void setTextOnTextBock(string city)
         {
             RESTClient rest = new RESTClient();
-            string response = rest.getWeatherForLocation(city);
+            string response;
+            try
+            {
+                response = rest.getWeatherForLocation(city);
+            }
+            catch (HttpRequestException e)
+            {
+                String dialogStr = String.Format("City \"{0}\" doesn't exists", city).ToString();
+                MessageDialog dialog = new MessageDialog(dialogStr);
+                await dialog.ShowAsync();
+                return;
+            }
             WeatherInfo weatherInfo = JsonConvert.DeserializeObject<WeatherInfo>(response);
 
             tbCityValue.Text = weatherInfo.city;
@@ -123,7 +136,7 @@ namespace UWP
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (tbCityName.Text != null)
+            if (!String.IsNullOrEmpty(tbCityName.Text))
                 setTextOnTextBock(tbCityName.Text);
         }
 

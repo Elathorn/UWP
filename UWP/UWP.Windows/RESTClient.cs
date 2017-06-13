@@ -23,8 +23,9 @@ namespace UWP
             HttpResponseMessage response;
             response = client.GetAsync(uri).Result;
             response.EnsureSuccessStatusCode();
-            var content = response.Content.ReadAsStringAsync().Result;
-            return content;
+            var content = response.Content.ReadAsStringAsync();
+            var status = content.Status;
+            return content.Result;
         }
     }
 }
